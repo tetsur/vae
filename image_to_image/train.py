@@ -43,7 +43,7 @@ def main():
 
     # net内VAEオブジェクトの生成
 
-    model = net_img.VAE(1, 10, 64)
+    model = net_img.VAE(3, 10, 64)
     if 0 <= args.gpu:
         model.to_gpu()  # GPUを使うための処理
     # optimizer(パラメータ更新用)
@@ -59,11 +59,13 @@ def main():
    
     traini = np.load('birds_img.npy')
 
-    traini = traini.reshape((len(traini), 1, 128, 128))
+    traini = traini.reshape((len(traini), 3, 128, 128))
     print(traini.shape)
 
-
     train, test = train_test_split(traini, test_size=0.2, random_state=50)
+    print("======")
+    print(train.shape)
+    
 
 
 #------------------イテレーターによるデータセットの設定-----------------------------------

@@ -11,6 +11,7 @@ from chainer import serializers
 import numpy as np
 from chainer.datasets import tuple_dataset
 import net_img
+from PIL import Image
 from sklearn.model_selection import train_test_split
 
 
@@ -42,7 +43,7 @@ def main():
         cuda.get_device_from_id(args.gpu).use()
 
     # net内VAEオブジェクトの生成
-    model = net_img.VAE(1,10,64)
+    model = net_img.VAE(3,10,64)
     chainer.serializers.load_npz("birds_img.npz",model)
     if 0 <= args.gpu:
         model.to_gpu()  # GPUを使うための処理
@@ -61,32 +62,35 @@ def main():
     
     traini = np.load('birds_img.npy')
     
-    traini = traini.reshape((len(traini), 1, 128, 128))
+    traini = traini.reshape((len(traini), 3, 128, 128))
      
 
     # Visualize the results
+
     def save_images(x, filename):
         import matplotlib.pyplot as plt
         import matplotlib.cm as cm
         fig, ax = plt.subplots(3, 3, figsize=(9, 9), dpi=100)
         for ai, xi in zip(ax.flatten(), x):
-            ai.imshow(xi.reshape(128, 128), cmap=cm.gray)
+            print(xi.shape)
+            xi = xi.transpose(1, 2, 0)
+            #xi = Image.fromarray(np.uint8(xi))
+            print(xi.shape)
+           #xi.save(filename,quality=95, optimize=True)
+            ai.imshow(xi)  # , cmap=cm.gray
         fig.savefig(filename)
-    
 
     #model.to_cpu()
 
     train_ind = [10,20,18,19,26]
     x = chainer.Variable(np.asarray(traini[train_ind]))
-    print(x)
+
     with chainer.using_config('train', False), chainer.no_backprop_mode():
         
         mu, ln_var = model.encode(x)
         x2 = model.decode(mu)
         
-        #x2 =model(x)
-        print(x2)
-        
+
     save_images(x.array, os.path.join(args.out, 'train'))
     save_images(x2.array, os.path.join(args.out, 'train_reconstructed'))
 

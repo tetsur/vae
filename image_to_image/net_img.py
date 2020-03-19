@@ -29,7 +29,7 @@ class VAE(chainer.Chain):
                 n_first, n_first, 4, 2, 1)
             self.ld3 = L.Deconvolution2D(
                 n_first, n_first, 4, 2, 1)
-            self.ld4 = L.Deconvolution2D(n_first, 1, 4, 2, 1)
+            self.ld4 = L.Deconvolution2D(n_first, 3, 4, 2, 1)
         self.n_first = n_first
        # 400*128/(k1k2k3/2*2*2)
        #k*stride*128*64 = 65536
