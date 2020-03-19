@@ -1,0 +1,4 @@
+.DS_Store
+__pycache__
+/image_to_image/birds_img.npy
+/text_to_image/001.Black_footed_Albatross_img
