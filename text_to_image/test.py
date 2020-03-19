@@ -48,7 +48,7 @@ def main():
     if 0 <= args.gpu:
         textVae.to_gpu()  # GPUを使うための処理
 
-    model = net_img.VAE(3, 10, 64, textVae)
+    model = net_img.VAE(1, 20, 64, textVae)
     chainer.serializers.load_npz("birds_all.npz", model)
     if 0 <= args.gpu:
         model.to_gpu()  # GPUを使うための処理
@@ -66,7 +66,7 @@ def main():
     
     traini = np.load('birds_img.npy')
     
-    traini = traini.reshape((len(traini), 3, 128, 128))
+    traini = traini.reshape((len(traini), 1, 128, 128))
     
     train = tuple_dataset.TupleDataset(traint, traini)
 
@@ -109,14 +109,9 @@ def main():
         import matplotlib.cm as cm
         fig, ax = plt.subplots(3, 3, figsize=(9, 9), dpi=100)
         for ai, xi in zip(ax.flatten(), x):
-            print(xi.shape)
-            xi = xi.transpose(1, 2, 0)
-            #xi = Image.fromarray(np.uint8(xi))
-            print(xi.shape)
-           #xi.save(filename,quality=95, optimize=True)
-            ai.imshow(xi)  # , cmap=cm.gray
+            ai.imshow(xi.reshape(128, 128), cmap=cm.gray)
         fig.savefig(filename)
-
+    
 
     #model.to_cpu()
 

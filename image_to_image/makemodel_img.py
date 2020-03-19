@@ -33,8 +33,8 @@ for f in traindata_img2:
         '001.Black_footed_Albatross_img/' + f), dtype='float32')
     img = img / 255
     img = img.astype('float32')
-    img = img.transpose(2, 0, 1)
-    print(img.shape)
+    img = np.reshape(img, (128,128))
+    
     for i in range(10):
         train.append(img)
   
@@ -59,6 +59,5 @@ for f in traindata_img2:
     #img = img.transpose(2,0,1)
 train = np.array(train,dtype = 'float32')
 print(train.shape)
-print(train[0])
 np.save("birds_img",train)
 

@@ -13,7 +13,7 @@ from sklearn.model_selection import train_test_split
 model = word2vec.Word2Vec.load("birds_txt.model")
 train = []
 
-list0 = np.zeros(30, dtype='float32')
+list0 = np.zeros(10, dtype='float32')
 
 
 

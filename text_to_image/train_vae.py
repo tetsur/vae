@@ -28,7 +28,7 @@ def main():
                         help='number of epochs to learn')
     parser.add_argument('--dimz', '-z', default=20, type=int,
                         help='dimention of encoded vector')
-    parser.add_argument('--batchsize', '-b', type=int, default=10,
+    parser.add_argument('--batchsize', '-b', type=int, default=25,
                         help='learning minibatch size')
     args = parser.parse_args()
 

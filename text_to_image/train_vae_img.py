@@ -25,11 +25,11 @@ def main():
                         help='GPU ID (negative value indicates CPU)')
     parser.add_argument('--out', '-o', default='result',
                         help='Directory to output the result')
-    parser.add_argument('--epoch', '-e', default=100, type=int,
+    parser.add_argument('--epoch', '-e', default=1000, type=int,
                         help='number of epochs to learn')
     parser.add_argument('--dimz', '-z', default=20, type=int,
                         help='dimention of encoded vector')
-    parser.add_argument('--batchsize', '-b', type=int, default=20,
+    parser.add_argument('--batchsize', '-b', type=int, default=50,
                         help='learning minibatch size')
     args = parser.parse_args()
 
@@ -43,13 +43,13 @@ def main():
         cuda.get_device_from_id(args.gpu).use()
 
     # net内VAEオブジェクトの生成
-    textVae = net.VAE(400, args.dimz, 200, 100)
+    textVae = net.VAE(600, args.dimz, 300, 100)
     chainer.serializers.load_npz("birds_txt.npz", textVae)
     if 0 <= args.gpu:
         textVae.to_gpu()  # GPUを使うための処理
 
     #model = netN.VAE(textVae, n_latent=10, ch1=5000, ch2=10000, ch3=16384)
-    model = net_img.VAE(3, 20, 64,textVae)
+    model = net_img.VAE(1, 20, 64,textVae)
     #chainer.serializers.load_npz("mymodel_img.npz", model)
     if 0 <= args.gpu:
         model.to_gpu()  # GPUを使うための処理

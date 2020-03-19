@@ -25,7 +25,7 @@ y = y.reshape((20,30))
 from gensim.models import word2vec
 w2v = word2vec.Word2Vec.load('birds_txt.model')
 
-"""
+
 for w in y:
     reconst = w2v.similar_by_vector(w.data, topn=  1)
     print(reconst)
@@ -36,4 +36,4 @@ print(reconst_words)
 txt2 = ' '.join(reconst_words)
 
 print(txt2)
-
+"""
